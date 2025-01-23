@@ -7,6 +7,7 @@ class PasswordFieldRules extends StatelessWidget {
   final GlobalKey<FormFieldState> fieldKey;
   final Map<String, String?> strengthCheckResults;
 
+  // PasswordStrengthHints
   const PasswordFieldRules({
     super.key,
     required this.formColors,
