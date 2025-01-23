@@ -14,7 +14,7 @@ class AuthFormField extends FormField<String> {
     String? hintText,
     TextInputType? keyboardType,
     void Function(String)? onChanged,
-    bool hideErrorText = false,
+    bool hideValidatorErrorText = false,
     this.obscureText = false,
     this.validateOnBlur = false,
   }) : super(
@@ -65,7 +65,7 @@ class AuthFormField extends FormField<String> {
                     : null,
                 filled: true,
                 fillColor: hasError ? formColors.invalidLightRed : null,
-                errorStyle: hideErrorText
+                errorStyle: hideValidatorErrorText
                     ? const TextStyle(fontSize: 0, height: 0)
                     : TextStyle(
                         color: formColors.invalidRed,
@@ -105,7 +105,7 @@ class AuthFormField extends FormField<String> {
 }
 
 class _AuthFormFieldState extends FormFieldState<String> {
-  bool _obscureText = true;
+  bool _obscureText = false;
   bool _hasFocus = false;
 
   late FocusNode focusNode;

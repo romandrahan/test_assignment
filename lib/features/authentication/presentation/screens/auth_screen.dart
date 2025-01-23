@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:test_assignment/features/authentication/presentation/auth_form_colors.dart';
 import 'package:test_assignment/features/authentication/presentation/widgets/auth_form_field.dart';
+import 'package:test_assignment/features/authentication/presentation/widgets/password_field_labels.dart';
 
 typedef CustomFieldValidator = String? Function(String?);
 typedef CustomFieldRules = Map<String, CustomFieldValidator>;
@@ -112,7 +113,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     key: _passwordFieldKey,
                     hintText: 'Create your password',
                     obscureText: true,
-                    hideErrorText: true,
+                    hideValidatorErrorText: true,
                     formColors: formColors,
                     validator: (fieldValue) {
                       return _checkPasswordStrength(fieldValue) ? null : '';
@@ -127,26 +128,11 @@ class _AuthScreenState extends State<AuthScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 20, top: 8),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: _passwordRules.keys
-                          .map((title) => Text(
-                                title,
-                                style: TextStyle(
-                                  fontSize: 13,
-                                  color: _passwordStrengthChecks.isEmpty ||
-                                          (_passwordStrengthChecks[title] !=
-                                                  null &&
-                                              _passwordFieldKey
-                                                      .currentState?.hasError ==
-                                                  false)
-                                      ? null
-                                      : _passwordStrengthChecks[title] == null
-                                          ? formColors.validGreen
-                                          : formColors.invalidRed,
-                                ),
-                              ))
-                          .toList(),
+                    child: PasswordFieldRules(
+                      formColors: formColors,
+                      rulesList: _passwordRules.keys,
+                      fieldKey: _passwordFieldKey,
+                      strengthCheckResults: _passwordStrengthChecks,
                     ),
                   ),
                   Center(
