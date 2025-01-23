@@ -1,14 +1,13 @@
 import 'package:flutter/widgets.dart';
 import 'package:test_assignment/features/authentication/presentation/auth_form_colors.dart';
 
-class PasswordFieldRules extends StatelessWidget {
+class PasswordStrengthHints extends StatelessWidget {
   final AuthFormColors formColors;
   final Iterable<String> rulesList;
   final GlobalKey<FormFieldState> fieldKey;
   final Map<String, String?> strengthCheckResults;
 
-  // PasswordStrengthHints
-  const PasswordFieldRules({
+  const PasswordStrengthHints({
     super.key,
     required this.formColors,
     required this.rulesList,

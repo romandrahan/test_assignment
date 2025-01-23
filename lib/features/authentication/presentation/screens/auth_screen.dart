@@ -128,7 +128,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 20, top: 8),
-                    child: PasswordFieldRules(
+                    child: PasswordStrengthHints(
                       formColors: formColors,
                       rulesList: _passwordRules.keys,
                       fieldKey: _passwordFieldKey,
