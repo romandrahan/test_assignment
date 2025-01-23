@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:test_assignment/features/authentication/widgets/auth_form_field.dart';
+import 'package:test_assignment/features/authentication/presentation/auth_form_colors.dart';
+import 'package:test_assignment/features/authentication/presentation/widgets/auth_form_field.dart';
 
 typedef CustomFieldValidator = String? Function(String?);
 typedef CustomFieldRules = Map<String, CustomFieldValidator>;
@@ -59,6 +60,8 @@ class _AuthScreenState extends State<AuthScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final formColors = Theme.of(context).extension<AuthFormColors>()!;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
@@ -99,6 +102,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     hintText: 'Email',
                     keyboardType: TextInputType.emailAddress,
                     validateOnBlur: true,
+                    formColors: formColors,
                     validator: FormBuilderValidators.email(
                       errorText: 'Invalid email address',
                     ),
@@ -109,6 +113,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     hintText: 'Create your password',
                     obscureText: true,
                     hideErrorText: true,
+                    formColors: formColors,
                     validator: (fieldValue) {
                       return _checkPasswordStrength(fieldValue) ? null : '';
                     },
@@ -137,8 +142,8 @@ class _AuthScreenState extends State<AuthScreen> {
                                                   false)
                                       ? null
                                       : _passwordStrengthChecks[title] == null
-                                          ? const Color(0xFF27B274)
-                                          : const Color(0xFFFF8080),
+                                          ? formColors.validGreen
+                                          : formColors.invalidRed,
                                 ),
                               ))
                           .toList(),

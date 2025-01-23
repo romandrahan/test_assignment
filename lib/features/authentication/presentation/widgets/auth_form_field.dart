@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_assignment/features/authentication/presentation/auth_form_colors.dart';
 
 class AuthFormField extends FormField<String> {
   final bool obscureText;
@@ -9,6 +10,7 @@ class AuthFormField extends FormField<String> {
     super.validator,
     super.onSaved,
     super.initialValue,
+    required AuthFormColors formColors,
     String? hintText,
     TextInputType? keyboardType,
     void Function(String)? onChanged,
@@ -19,6 +21,9 @@ class AuthFormField extends FormField<String> {
           builder: (FormFieldState<String> genericState) {
             final state = genericState as _AuthFormFieldState;
             final hasError = state.hasError;
+
+            final bodyLargeTextStyle =
+                Theme.of(state.context).textTheme.bodyLarge!;
 
             return TextField(
               onChanged: (fieldValue) {
@@ -35,11 +40,11 @@ class AuthFormField extends FormField<String> {
                 color: state._hasFocus ||
                         state.value == null ||
                         (state.value != null && state.hasError)
-                    ? const Color(0xFF4A4E71)
-                    : const Color(0xFF27B274),
+                    ? bodyLargeTextStyle.color
+                    : formColors.validGreen,
               ),
               decoration: InputDecoration(
-                hintStyle: const TextStyle(color: Color(0xFF6F91BC)),
+                hintStyle: TextStyle(color: bodyLargeTextStyle.decorationColor),
                 hintText: hintText,
                 errorText: state.errorText,
                 suffixIcon: obscureText
@@ -50,8 +55,8 @@ class AuthFormField extends FormField<String> {
                               : Icons.visibility,
                           size: 20,
                           color: state.hasError
-                              ? const Color(0xFFFF8080)
-                              : const Color(0xFF6F91BC),
+                              ? formColors.invalidRed
+                              : bodyLargeTextStyle.decorationColor,
                         ),
                         onPressed: () {
                           state.toggleObscure();
@@ -59,11 +64,11 @@ class AuthFormField extends FormField<String> {
                       )
                     : null,
                 filled: true,
-                fillColor: hasError ? const Color(0xFFFDEFEE) : null,
+                fillColor: hasError ? formColors.invalidLightRed : null,
                 errorStyle: hideErrorText
                     ? const TextStyle(fontSize: 0, height: 0)
-                    : const TextStyle(
-                        color: Color(0xFFFF8080),
+                    : TextStyle(
+                        color: formColors.invalidRed,
                         fontSize: 13,
                       ),
                 enabledBorder: OutlineInputBorder(
@@ -71,22 +76,23 @@ class AuthFormField extends FormField<String> {
                   borderSide: state.value == null ||
                           (state.value != null && state.hasError)
                       ? BorderSide.none
-                      : const BorderSide(color: Color(0xFF27B274)),
+                      : BorderSide(color: formColors.validGreen),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
-                  borderSide: const BorderSide(color: Color(0xFF6F91BC)),
+                  borderSide:
+                      BorderSide(color: bodyLargeTextStyle.decorationColor!),
                 ),
                 errorBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
-                  borderSide: const BorderSide(
-                    color: Color(0xFFFF8080),
+                  borderSide: BorderSide(
+                    color: formColors.invalidRed,
                   ),
                 ),
                 focusedErrorBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
-                  borderSide: const BorderSide(
-                    color: Color(0xFFFF8080),
+                  borderSide: BorderSide(
+                    color: formColors.invalidRed,
                   ),
                 ),
               ),
